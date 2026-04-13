@@ -1,103 +1,65 @@
+#https://github.com/TristanStarkey/lab-11/blob/main/test_calculator.py
+# Partner 1: Tristan Starkey
+# Partner 2: Arthur Nikitin
 import unittest
-from calculator import add, subtract, multiply, divide, modulo, power, square_root
+import math
+from calculator import add, subtract, mul, div, modulo, power, square_root, logarithm, exp, hypotenuse
 
 
-class TestAdd(unittest.TestCase):
-    def test_add_positive(self):
+class TestCalculator(unittest.TestCase):
+
+    def test_add(self):
         self.assertEqual(add(3, 4), 7)
-
-    def test_add_negative(self):
         self.assertEqual(add(-2, -5), -7)
-
-    def test_add_mixed(self):
-        self.assertEqual(add(-3, 10), 7)
-
-    def test_add_zero(self):
         self.assertEqual(add(0, 0), 0)
 
-
-class TestSubtract(unittest.TestCase):
-    def test_subtract_positive(self):
+    def test_subtract(self):
         self.assertEqual(subtract(10, 4), 6)
-
-    def test_subtract_negative(self):
-        self.assertEqual(subtract(-3, -2), -1)
-
-    def test_subtract_to_negative(self):
         self.assertEqual(subtract(2, 9), -7)
-
-    def test_subtract_zero(self):
         self.assertEqual(subtract(5, 0), 5)
 
+    def test_multiply(self):
+        self.assertEqual(mul(3, 5), 15)
+        self.assertEqual(mul(-3, 4), -12)
+        self.assertEqual(mul(99, 0), 0)
 
-class TestMultiply(unittest.TestCase):
-    def test_multiply_positive(self):
-        self.assertEqual(multiply(3, 5), 15)
-
-    def test_multiply_negative(self):
-        self.assertEqual(multiply(-3, 4), -12)
-
-    def test_multiply_both_negative(self):
-        self.assertEqual(multiply(-3, -4), 12)
-
-    def test_multiply_by_zero(self):
-        self.assertEqual(multiply(99, 0), 0)
-
-
-class TestDivide(unittest.TestCase):
-    def test_divide_positive(self):
-        self.assertEqual(divide(10, 2), 5)
-
-    def test_divide_negative(self):
-        self.assertEqual(divide(-9, 3), -3)
-
-    def test_divide_float_result(self):
-        self.assertAlmostEqual(divide(7, 2), 3.5)
+    def test_divide(self):
+        self.assertEqual(div(10, 2), 5)
+        self.assertEqual(div(-9, 3), -3)
+        self.assertAlmostEqual(div(7, 2), 3.5)
 
     def test_divide_by_zero(self):
         with self.assertRaises(ValueError):
-            divide(10, 0)
+            div(10, 0)
 
-
-class TestModulo(unittest.TestCase):
-    def test_modulo_basic(self):
-        self.assertEqual(modulo(10, 3), 1)
-
-    def test_modulo_even(self):
-        self.assertEqual(modulo(8, 4), 0)
-
-    def test_modulo_by_zero(self):
-        with self.assertRaises(ValueError):
-            modulo(5, 0)
-
-
-class TestPower(unittest.TestCase):
-    def test_power_positive(self):
-        self.assertEqual(power(2, 10), 1024)
-
-    def test_power_zero_exp(self):
-        self.assertEqual(power(5, 0), 1)
-
-    def test_power_negative_exp(self):
-        self.assertAlmostEqual(power(2, -1), 0.5)
-
-    def test_power_zero_base(self):
-        self.assertEqual(power(0, 5), 0)
-
-
-class TestSquareRoot(unittest.TestCase):
-    def test_sqrt_perfect_square(self):
+    def test_sqrt(self):
         self.assertEqual(square_root(25), 5)
-
-    def test_sqrt_zero(self):
         self.assertEqual(square_root(0), 0)
-
-    def test_sqrt_float_result(self):
-        self.assertAlmostEqual(square_root(2), 1.4142135623730951)
-
-    def test_sqrt_negative(self):
+        self.assertAlmostEqual(square_root(2), math.sqrt(2))
         with self.assertRaises(ValueError):
             square_root(-4)
+
+    def test_logarithm(self):
+        self.assertAlmostEqual(logarithm(math.e), 1.0)
+        self.assertAlmostEqual(logarithm(100, 10), 2.0)
+        self.assertAlmostEqual(logarithm(8, 2), 3.0)
+
+    def test_log_invalid_argument(self):
+        with self.assertRaises(ValueError):
+            logarithm(0)
+        with self.assertRaises(ValueError):
+            logarithm(-5)
+
+    def test_log_invalid_base(self):
+        with self.assertRaises(ValueError):
+            logarithm(10, 0)
+        with self.assertRaises(ValueError):
+            logarithm(10, -1)
+
+    def test_hypotenuse(self):
+        self.assertAlmostEqual(hypotenuse(3, 4), 5.0)
+        self.assertAlmostEqual(hypotenuse(5, 12), 13.0)
+        self.assertAlmostEqual(hypotenuse(1, 1), math.sqrt(2))
 
 
 if __name__ == '__main__':
